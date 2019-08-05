@@ -4,12 +4,12 @@ Created 2018/05/16
 
 @author: RZM
 """
-
+#%%
 from __future__ import division
 import re, os,sys, math, operator,random, copy,collections; import numpy as np; import pandas as pd
 from itertools import groupby; import pprint as pp
 import matplotlib.pyplot as plt
-
+#%%
 def processCLI(args):
     #synergy(args)
     return
@@ -25,19 +25,7 @@ def survivorship(thedir="",in1="",in2="",outfile="",nrows=0):
     for indexr,row in enumerate(permL.itertuples()):
         for index,cell in enumerate(row[2:]):#we are using 2: here to i) avoid hitting the row number ii) avoid hitting the T column
             proportions.iloc[indexr,index+1]=(permL.iloc[indexr,index+1] / permL.iloc[0,index+1])#we are adding index+1 here to avoid using the T column    
-            
-            
-    
-        '''for index,cell in enumerate(row[1:]):
-            if indexr<5:
-                pass#print(str(cell)+'__'+str(nodf.iloc[0,index])+"__"+str(index))
-            try:
-                lndf.iloc[indexr,index]=((cell / nodf.iloc[0,index])-1)
-            except ValueError:
-                lndf.iloc[indexr,index]=0    '''
-    
-    
-    
+              
     if outfile=="":
         outfile2 = str(in1[:-7])+"_survivorship.csv"
     else:
@@ -47,14 +35,14 @@ def survivorship(thedir="",in1="",in2="",outfile="",nrows=0):
         
     return raws,dils,permL,proportions
 
-def combine_technical_replicates(indf):
+def combine_technical_replicates(indf):#this function combines technical replicates when they are represented in the .csv and df by different columns with similar headers
     tec=pd.DataFrame();reps=[];doneL=[]
     tec["T"]=indf["T"]
     for index,h in enumerate(indf.columns[1:]):#use [1:] to avoid the T column
         tempS=set()
         if h not in doneL:
             for index2,i in enumerate(indf.columns[1:]):
-                if h[0:3]==i[0:3]:
+                if str(h[0:6])==str(i[0:6]):#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
                     tempS.add(i)
         for j in tempS:
             doneL.append(j)
@@ -66,16 +54,16 @@ def combine_technical_replicates(indf):
     metaD={}
     for indext, tup in enumerate(reps):
         #pp.pprint(tup)
-        tec[tup[0][0:3]]=indf["T"].astype('float64');metaD[tup[0][0:3]]=[]
+        tec[tup[0][0:6]]=indf["T"].astype('float64');metaD[tup[0][0:6]]=[]#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
         #pp.pprint(tec)
         for indexr,row in enumerate(indf.itertuples()):
             repvals=[]
             for index,cell in enumerate(row[1:]):
-                if indf.columns[index][0:3]==tup[0][0:3]:
+                if indf.columns[index][0:6]==tup[0][0:6]:#set the values of indf.columns[index][0:6] and [tup[0][0:x] to be what you chose in line 57
                     repvals.append(indf.iloc[indexr,index])
             #pp.pprint(np.mean(repvals))
-            tec[tup[0][0:3]][indexr]=float(np.mean(repvals))
-            metaD[tup[0][0:3]].append((np.std(repvals)/np.mean(repvals)*100))
+            tec[tup[0][0:6]][indexr]=float(np.mean(repvals))#set the values of tec[tup[0][0:x] to be what you chose in line 57
+            metaD[tup[0][0:6]].append((np.std(repvals)/np.mean(repvals)*100))#set the values of [tup[0][0:x] to be what you chose in line 57
 
                     
                     
@@ -85,14 +73,16 @@ def combine_technical_replicates(indf):
     #pp.pprint(reps)    
     return tec,metaD
 
+#%%
+#m = split_two_factor(masterin="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\growth.curves\\Day.150\\master.csv",factor1="Media",factor2="Metric")
 
 
-
-r,d,m,p=survivorship(in1="20180422_CLS_pyraw_14_raw.csv",in2="20180422_CLS_pyraw_14_dil.csv")
+r,d,m,p=survivorship(in1="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\20190401_CLS.AP-3_raw_0.corrected.csv",in2="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\20190401_CLS.AP-3_dil.csv",)
 t,M=combine_technical_replicates(p)
-pd.DataFrame.to_csv(t,path_or_buf="20180422_16.biological.lx.csv",columns=None,index=False)
+pd.DataFrame.to_csv(t,path_or_buf="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\combined_AP-3_0.corrected.csv",columns=None,index=False)
 
 
+#%%
 def synergy(thedir="",infile="",outfile="",dim=48,freq=15,trunc=-9):
     inlist=[]
     with open (infile, 'r') as IN:
@@ -180,9 +170,42 @@ def synergy(thedir="",infile="",outfile="",dim=48,freq=15,trunc=-9):
                    
     #pp.pprint(inlist)
     return nodf,lndf
+#%%
 
-
-#mydf,myd=synergy(infile="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\growth.curves\\Day.150\\raw\\20180306_RSV_20W2-5s2_DMB_00s.csv",outfile="",trunc=1440)
+mydf,myd=synergy(infile="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\growth.curves\\Day.150\\raw\\20180306_RSV_20W2-5s2_DMB_00s.csv",outfile="",trunc=1440)
 
 '''if __name__ == '__main__':
     processCLI(sys.argv)'''
+    #%%
+'''def split_two_factor(masterin,factor1="",factor2=""):
+    master=pd.read_csv(masterin)
+    names1=set([i for i in master[factor1]]);names2=set([i for i in master[factor2]])
+    for i in names1:
+        for j in names2:
+            #pp.pprint(i+"_"+j)
+            #tempdf=pd.DataFrame().reindex_like(master)#reindex_like is badass!
+            tempdf=pd.DataFrame(data=np.zeros(shape=(1,len(master.columns)-2)),columns=master.columns[2:])#setting the shape of np.zeros here is hard-coded with the assumption of 2 factors. this could certainly be modified if there were more factors
+            for index,col_series_pair in enumerate(master.iteritems()):
+                if index>=2:
+                    repvals=[]
+                    for indexr,row in enumerate(col_series_pair[1]):#only want to iterate through each series in each pair
+                        if master[factor1][indexr]==i and master[factor2][indexr]==j:
+                            repvals.append(master.iloc[indexr,index])
+                    pp.pprint(repvals)            
+                    tempdf.iloc[0,index-2]=float(np.nanmean(repvals))#nanmean takes the mean of all the values in the List that are **not** NaN
+            filename=i+"_"+j+".csv"        
+            pd.DataFrame.to_csv(tempdf,path_or_buf=filename,columns=None,index=False)
+                
+                
+    return master
+
+def two_peaks_flow(infile,cutoff1,cutoff2,metric):
+    tfp=pd.read_csv(infile);negv=0;posv=0
+    for row in tfp.iterrows():
+        if row[1][metric]<cutoff1:
+            negv+=1
+        elif row[1][metric]>cutoff2:
+            posv+=1
+    return tfp,negv,posv
+
+t,n,p=two_peaks_flow(infile="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\flow\\20180605\\T24_100000.FSC_TFP1-GFP.csv",cutoff1=10000,cutoff2=10000,metric="GFP-H")'''
