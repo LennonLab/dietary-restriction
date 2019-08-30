@@ -102,7 +102,7 @@ def synergy(thedir="",infile="",outfile="",dim=48,freq=15,trunc=-9):
     return nodf,lndf
 #%%
 
-mydf,myd=synergy(infile=r"C:\Users\rmoge\Box Sync\JTL_Lab\Lab.Notebook\20180627_Vn\i-tRNA-met\20190802_grr\20190803_WT_tfox_DitM.csv",outfile="",trunc=1440)
+mydf,myd=synergy(infile=r"C:\Users\rmoge\Box Sync\JTL_Lab\Lab.Notebook\20180627_Vn\Experiments\Media.trials\20190814_LBv2_M9.for.Vn\20190814_LBv2_M9.csv",outfile="",trunc=1440)
 
 '''if __name__ == '__main__':
     processCLI(sys.argv)'''
