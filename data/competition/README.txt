@@ -1,0 +1,1 @@
+Betsy competed our ancester strain against a deletion strain with a kanamycin resistance cassette. The competition was analyzed by antibiotic plating rather than flow cytometery.
