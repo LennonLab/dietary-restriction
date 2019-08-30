@@ -1,0 +1,2 @@
+Cell densities per mL were collected and recorded in the spreadsheets. I wrote a weekly report on these data. There is also a minitab file that analysed the treatment groups.
+These data were used to inform how to proceed with the experiment.
