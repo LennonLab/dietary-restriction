@@ -42,7 +42,7 @@ def combine_technical_replicates(indf):#this function combines technical replica
         tempS=set()
         if h not in doneL:
             for index2,i in enumerate(indf.columns[1:]):
-                if str(h[0:6])==str(i[0:6]):#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
+                if str(h[0:3])==str(i[0:3]):#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
                     tempS.add(i)
         for j in tempS:
             doneL.append(j)
@@ -54,16 +54,16 @@ def combine_technical_replicates(indf):#this function combines technical replica
     metaD={}
     for indext, tup in enumerate(reps):
         #pp.pprint(tup)
-        tec[tup[0][0:6]]=indf["T"].astype('float64');metaD[tup[0][0:6]]=[]#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
+        tec[tup[0][0:3]]=indf["T"].astype('float64');metaD[tup[0][0:3]]=[]#this takes the first 3 characters if set to h[0:3]; combine based on the labels in YOUR sample
         #pp.pprint(tec)
         for indexr,row in enumerate(indf.itertuples()):
             repvals=[]
             for index,cell in enumerate(row[1:]):
-                if indf.columns[index][0:6]==tup[0][0:6]:#set the values of indf.columns[index][0:6] and [tup[0][0:x] to be what you chose in line 57
+                if indf.columns[index][0:3]==tup[0][0:3]:#set the values of indf.columns[index][0:6] and [tup[0][0:x] to be what you chose in line 57
                     repvals.append(indf.iloc[indexr,index])
             #pp.pprint(np.mean(repvals))
-            tec[tup[0][0:6]][indexr]=float(np.mean(repvals))#set the values of tec[tup[0][0:x] to be what you chose in line 57
-            metaD[tup[0][0:6]].append((np.std(repvals)/np.mean(repvals)*100))#set the values of [tup[0][0:x] to be what you chose in line 57
+            tec[tup[0][0:3]][indexr]=float(np.mean(repvals))#set the values of tec[tup[0][0:x] to be what you chose in line 57
+            metaD[tup[0][0:3]].append((np.std(repvals)/np.mean(repvals)*100))#set the values of [tup[0][0:x] to be what you chose in line 57
 
                     
                     
@@ -77,9 +77,9 @@ def combine_technical_replicates(indf):#this function combines technical replica
 #m = split_two_factor(masterin="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\growth.curves\\Day.150\\master.csv",factor1="Media",factor2="Metric")
 
 
-r,d,m,p=survivorship(in1="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\20190401_CLS.AP-3_raw_0.corrected.csv",in2="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\20190401_CLS.AP-3_dil.csv",)
+r,d,m,p=survivorship(in1=r"C:\Users\rmoge\Box Sync\JTL_Lab\Lab.Notebook\20170903_DR_Evolution\data\CLS\Day.275_DR\20180724_DR_raw.csv",in2=r"C:\Users\rmoge\Box Sync\JTL_Lab\Lab.Notebook\20170903_DR_Evolution\data\CLS\Day.275_DR\20180724_DR_dil.csv",)
 t,M=combine_technical_replicates(p)
-pd.DataFrame.to_csv(t,path_or_buf="C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20180515_lifespan.mutants\\data\\CLS\\20190401_AP-3_T300\\combined_AP-3_0.corrected.csv",columns=None,index=False)
+pd.DataFrame.to_csv(t,path_or_buf=r"C:\Users\rmoge\Box Sync\JTL_Lab\Lab.Notebook\20170903_DR_Evolution\data\CLS\Day.275_YPD\combined_DR.275.csv",columns=None,index=False)
 
 
 #%%
