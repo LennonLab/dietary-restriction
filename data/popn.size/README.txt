@@ -1,1 +1,0 @@
-We used CFU counts to infer the [cells/mL] of our ancestor strain and a deletion mutant strain that was not referenced in this publication.

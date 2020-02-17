@@ -1,2 +1,0 @@
-Curve,b0,A,umax,L,z,umax.lw,umax.up,umax.lw.FI,umax.up.FI
-A3,-1.3713,3.4477,0.0065,-224.2596,-4.7338,NA,NA,0.0064,0.0067
