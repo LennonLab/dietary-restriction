@@ -1,27 +1,5 @@
 library(tidyverse)
 
-'''rm(list = ls())
-myd <- read.csv("C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\case.275.csv",header=T)
-attach(myd)
-names(myd)
-contrasts(trts) <- cbind(c(1,0,-1,0),c(0,1,0,-1),c(0,0,0,0))
-trts
-model4 <- aov(A~trts)
-summary.lm(model4)
-tapply(A,trts,mean)'''
-
-'''rm(list = ls())
-myd <- read.csv("C:\\Users\\RZM\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\case.275_r.csv",header=T)
-attach(myd)
-names(myd)
-contrasts(trts) <- cbind(c(0,1,0,-1),c(1,0,-1,0),c(0,0,0,0))
-trts
-model3 <- aov(e0~trts)
-#model3 <- aov(mubar~trts)
-summary.lm(model3)
-tapply(e0,trts,mean)
-#tapply(mubar,trts,mean)'''
-
 rm(list = ls())
 myt <- read.csv("C:\\Users\\rmoge\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\cases.275.csv",header=T)
 #myt <- read.csv("C:\\Users\\rmoge\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\cases.275_relative.to.VMA1.csv",header=T)
@@ -82,9 +60,29 @@ TukeyHSD(e0_outlier.removal_2way)
 e0.rel2way<-aov(myd$e0.rel ~ myd$Evolution + myd$Assay + myd$Evolution*myd$Assay)
 summary(e0.rel2way)
 TukeyHSD(e0.rel2way)
+#########################
+#ESM
+myESM <- read.csv("C:\\Users\\rmoge\\Box Sync\\JTL_Lab\\Lab.Notebook\\20170903_DR_Evolution\\data\\case.275_ESM.csv",header=T)
+V1<-var.test(myESM$CFU_DR_LY1,myESM$CFU_NR_LY1)
+V1
+t1<-t.test(myESM$CFU_DR_LY1,myESM$CFU_NR_LY1,alternative='l',paired=F,var.equal=T,mu=0)
+t1
+
+V2<-var.test(myESM$FC_DR_LY1,myESM$FC_NR_LY1)
+V2
+t2<-t.test(myESM$FC_DR_LY1,myESM$FC_NR_LY1,alternative='l',paired=F,var.equal=F,mu=0)
+t2
+
+V3<-var.test(myESM$umax_DR_LY1,myESM$umax_NR_LY1)
+V3
+t3<-t.test(myESM$umax_DR_LY1,myESM$umax_NR_LY1,alternative='l',paired=F,var.equal=T,mu=0)
+t3
 
 
 
+
+
+########################################
 mu2way<-aov(myd$mubar ~ myd$Evolution + myd$Assay + myd$Evolution*myd$Assay)
 summary(mu2way)
 TukeyHSD(mu2way)

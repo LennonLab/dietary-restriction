@@ -81,7 +81,7 @@ enaught +
   labs(x="\nAssay diet",y="Life expectancy (days)\n") +
   scale_y_continuous(limits = c(0.95,23.05),breaks=c(5,10,15,20), expand = c(0,0)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
-  theme(legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit(.3, "cm"), axis.ticks.x = element_blank())
+  theme(legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit(.3, "cm"), axis.ticks.x = element_blank())
 
 
 
@@ -105,4 +105,4 @@ W +   geom_hline(yintercept = 1, linetype=117, size = 1.75, color = "darkgrey") 
                              paste(scriptstyle(" ")))) +                           ###however, trying to paste \n messes everything up. Therefore, to gain space between the title and th axis line, I pasted another argument---this starts pn a new line, and, since it was blank, it just functions like \n in thise case
   scale_y_continuous(limits = c(0.95,1.8175), expand = c(0,0)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
-  theme(legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
+  theme(legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
